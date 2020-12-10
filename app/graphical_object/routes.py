@@ -25,7 +25,7 @@ import pickle
 import vptree
 import cv2
 import time
-from zipfile import ZipFile 
+from zipfile import ZipFile
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -48,38 +48,38 @@ def index_images():
         # Store Pdf with convert_from_path function
         filename = secure_filename(file['file'].filename)
         upload_path = os.path.join(basedir, 'static', 'images')
-        # specifying the zip file name 
+        # specifying the zip file name
         file_path = os.path.join(upload_path, filename)
         file['file'].save(file_path)
-  
-        # opening the zip file in READ mode 
+
+        # opening the zip file in READ mode
         with ZipFile(file_path, 'r') as zip:
-            # extracting all the files 
-            print('Extracting all the files now...') 
-            zip.extractall(upload_path) 
-            print('Done!') 
-    
+            # extracting all the files
+            print('Extracting all the files now...')
+            zip.extractall(upload_path)
+            print('Done!')
+
         # # delete the zip file
         # os.remove(file_path)
 
         # grab the paths to the input images and initialize the dictionary
         # of hashes
-    
-        imagePaths = list(paths.list_images(os.path.join(basedir, 'static','images')))
-        hashes = {}
-        print(imagePaths)
-        # loop over the image paths
-        for (i, imagePath) in enumerate(imagePaths):
-	        # load the input image
-	        print("[INFO] processing image {}/{}".format(i + 1, len(imagePaths)))
-	        image = cv2.imread(imagePath)
-	        # compute the hash for the image and convert it
-	        h = dhash(image)
-	        h = convert_hash(h)
-	        # update the hashes dictionary
-	        l = hashes.get(h, [])
-	        l.append(imagePath)
-	        hashes[h] = l
+
+        # imagePaths = list(paths.list_images(os.path.join(basedir, 'static','images')))
+        # hashes = {}
+        # print(imagePaths)
+        # # loop over the image paths
+        # for (i, imagePath) in enumerate(imagePaths):
+	    #     # load the input image
+	    #     print("[INFO] processing image {}/{}".format(i + 1, len(imagePaths)))
+	    #     image = cv2.imread(imagePath)
+	    #     # compute the hash for the image and convert it
+	    #     h = dhash(image)
+	    #     h = convert_hash(h)
+	    #     # update the hashes dictionary
+	    #     l = hashes.get(h, [])
+	    #     l.append(imagePath)
+	    #     hashes[h] = l
 
         # build the VP-Tree
         print("[INFO] building VP-Tree...")
@@ -130,12 +130,12 @@ def search():
         filename = secure_filename(file['file'].filename)
         image_query = os.path.join(basedir, 'static', 'queries', filename)
         file['file'].save(image_query)
-        query = '/queries/{}'.format(filename) 
+        query = '/queries/{}'.format(filename)
         image = cv2.imread(image_query)
     else:
         image_query = form['link']
         image = url_to_image(image_query)
-    
+
     # compute the hash for the query image, then convert it
     queryHash = dhash(image)
     queryHash = convert_hash(queryHash)
@@ -158,10 +158,10 @@ def search():
 		#     len(resultPaths), d, h))
 	    # print(resultPaths)
         response.append(r)
-    
+
     #res = json.dumps({'status': 'OK','message':'The Result of the search is displayed!', 'response' : response}, ensure_ascii=False)
-    
-    global result 
+
+    global result
     result = {'response': response, 'time': round(end - start, 5), 'query': query}
     return json.dumps({'status': 'OK','message':'The Result of the search is displayed!'})
 
