@@ -149,8 +149,7 @@ def search():
     # loop over the results
     for (d, h) in results:
 	    # grab all image paths in our dataset with the same hash
-        # paths = ['/' + '/'.join(path.split('\\')[5:]) for path in hashes.get(h, [])]
-        paths = hashes.get(h, [])
+        paths = ['/' + '/'.join(path.split('\\')[5:]) for path in hashes.get(h, [])]
 
         r = {'score' : (20-d)*5 , 'hash': h, 'paths': paths }
 	    # print("[INFO] {} total image(s) with d: {}, h: {}".format(
