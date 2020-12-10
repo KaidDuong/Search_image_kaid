@@ -57,8 +57,13 @@ def index_images():
         print('Extracting all the files now...') 
         zip.extractall(upload_path) 
         print('Done!') 
+    
+    # delete the zip file
+    os.remove(file_path)
+
     # grab the paths to the input images and initialize the dictionary
     # of hashes
+    
     imagePaths = list(paths.list_images(os.path.join(basedir, 'static','images')))
     hashes = {}
     print(imagePaths)
@@ -123,12 +128,12 @@ def search():
         filename = secure_filename(file['file'].filename)
         image_query = os.path.join(basedir, 'static', 'queries', filename)
         file['file'].save(image_query)
-
+        query = '/queries/{}'.format(filename) 
         image = cv2.imread(image_query)
     else:
         image_query = form['link']
         image = url_to_image(image_query)
-    query = '/' + '/'.join(image_query.split('\\')[5:]) 
+    
     # compute the hash for the query image, then convert it
     queryHash = dhash(image)
     queryHash = convert_hash(queryHash)
@@ -144,7 +149,8 @@ def search():
     # loop over the results
     for (d, h) in results:
 	    # grab all image paths in our dataset with the same hash
-        paths = ['/' + '/'.join(path.split('\\')[5:]) for path in hashes.get(h, [])]
+        # paths = ['/' + '/'.join(path.split('\\')[5:]) for path in hashes.get(h, [])]
+        paths = hashes.get(h, [])
 
         r = {'score' : (20-d)*5 , 'hash': h, 'paths': paths }
 	    # print("[INFO] {} total image(s) with d: {}, h: {}".format(
