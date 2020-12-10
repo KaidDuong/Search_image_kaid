@@ -52,12 +52,12 @@ def index_images():
         file_path = os.path.join(upload_path, filename)
         file['file'].save(file_path)
 
-        # opening the zip file in READ mode
-        with ZipFile(file_path, 'r') as zip:
-            # extracting all the files
-            print('Extracting all the files now...')
-            zip.extractall(upload_path)
-            print('Done!')
+        # # opening the zip file in READ mode
+        # with ZipFile(file_path, 'r') as zip:
+        #     # extracting all the files
+        #     print('Extracting all the files now...')
+        #     zip.extractall(upload_path)
+        #     print('Done!')
 
         # # delete the zip file
         # os.remove(file_path)
@@ -82,9 +82,9 @@ def index_images():
 	    #     hashes[h] = l
 
         # build the VP-Tree
-        print("[INFO] building VP-Tree...")
-        points = list(hashes.keys())
-        tree = vptree.VPTree(points, hamming)
+        # print("[INFO] building VP-Tree...")
+        # points = list(hashes.keys())
+        # tree = vptree.VPTree(points, hamming)
 
         # # serialize the VP-Tree to disk
         # print("[INFO] serializing VP-Tree...")
@@ -99,7 +99,7 @@ def index_images():
         # f.write(pickle.dumps(hashes))
         # f.close()
 
-        return json.dumps({'status': 'OK','message':'The Result of the indexing is saved!'})
+        return json.dumps({'status': 'OK','message':'The Result of the indexing is saved!{}'.format(file_path)})
     except:
         return json.dumps({'status': 'OK','message':'Error in the processing of the indexing. Please try again!'})
 
