@@ -86,18 +86,18 @@ def index_images():
         points = list(hashes.keys())
         tree = vptree.VPTree(points, hamming)
 
-        # serialize the VP-Tree to disk
-        print("[INFO] serializing VP-Tree...")
-        tree_path = os.path.join(basedir, 'static','indexing','vptree.pickle')
-        f = open(tree_path, "wb")
-        f.write(pickle.dumps(tree))
-        f.close()
-        # serialize the hashes to dictionary
-        print("[INFO] serializing hashes...")
-        hash_path = os.path.join(basedir, 'static','indexing','hashes.pickle')
-        f = open(hash_path, "wb")
-        f.write(pickle.dumps(hashes))
-        f.close()
+        # # serialize the VP-Tree to disk
+        # print("[INFO] serializing VP-Tree...")
+        # tree_path = os.path.join(basedir, 'static','indexing','vptree.pickle')
+        # f = open(tree_path, "wb")
+        # f.write(pickle.dumps(tree))
+        # f.close()
+        # # serialize the hashes to dictionary
+        # print("[INFO] serializing hashes...")
+        # hash_path = os.path.join(basedir, 'static','indexing','hashes.pickle')
+        # f = open(hash_path, "wb")
+        # f.write(pickle.dumps(hashes))
+        # f.close()
 
         return json.dumps({'status': 'OK','message':'The Result of the indexing is saved!'})
     except:
