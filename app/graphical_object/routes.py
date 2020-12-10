@@ -65,39 +65,39 @@ def index_images():
         # grab the paths to the input images and initialize the dictionary
         # of hashes
 
-        imagePaths = list(paths.list_images(os.path.join(basedir, 'static','images')))
-        hashes = {}
-        print(imagePaths)
-        # loop over the image paths
-        for (i, imagePath) in enumerate(imagePaths):
-	        # load the input image
-	        print("[INFO] processing image {}/{}".format(i + 1, len(imagePaths)))
-	        image = cv2.imread(imagePath)
-	        # compute the hash for the image and convert it
-	        h = dhash(image)
-	        h = convert_hash(h)
-	        # update the hashes dictionary
-	        l = hashes.get(h, [])
-	        l.append(imagePath)
-	        hashes[h] = l
+        # imagePaths = list(paths.list_images(os.path.join(basedir, 'static','images')))
+        # hashes = {}
+        # print(imagePaths)
+        # # loop over the image paths
+        # for (i, imagePath) in enumerate(imagePaths):
+	    #     # load the input image
+	    #     print("[INFO] processing image {}/{}".format(i + 1, len(imagePaths)))
+	    #     image = cv2.imread(imagePath)
+	    #     # compute the hash for the image and convert it
+	    #     h = dhash(image)
+	    #     h = convert_hash(h)
+	    #     # update the hashes dictionary
+	    #     l = hashes.get(h, [])
+	    #     l.append(imagePath)
+	    #     hashes[h] = l
 
-        # build the VP-Tree
-        print("[INFO] building VP-Tree...")
-        points = list(hashes.keys())
-        tree = vptree.VPTree(points, hamming)
+        # # build the VP-Tree
+        # print("[INFO] building VP-Tree...")
+        # points = list(hashes.keys())
+        # tree = vptree.VPTree(points, hamming)
 
-        # serialize the VP-Tree to disk
-        print("[INFO] serializing VP-Tree...")
-        tree_path = os.path.join(basedir, 'static','indexing','vptree.pickle')
-        f = open(tree_path, "wb")
-        f.write(pickle.dumps(tree))
-        f.close()
-        # serialize the hashes to dictionary
-        print("[INFO] serializing hashes...")
-        hash_path = os.path.join(basedir, 'static','indexing','hashes.pickle')
-        f = open(hash_path, "wb")
-        f.write(pickle.dumps(hashes))
-        f.close()
+        # # serialize the VP-Tree to disk
+        # print("[INFO] serializing VP-Tree...")
+        # tree_path = os.path.join(basedir, 'static','indexing','vptree.pickle')
+        # f = open(tree_path, "wb")
+        # f.write(pickle.dumps(tree))
+        # f.close()
+        # # serialize the hashes to dictionary
+        # print("[INFO] serializing hashes...")
+        # hash_path = os.path.join(basedir, 'static','indexing','hashes.pickle')
+        # f = open(hash_path, "wb")
+        # f.write(pickle.dumps(hashes))
+        # f.close()
 
         return json.dumps({'status': 'OK','message':'The Result of the indexing is saved!{}'.format(file_path)})
     except:
