@@ -58,8 +58,8 @@ def index_images():
         zip.extractall(upload_path) 
         print('Done!') 
     
-    # delete the zip file
-    os.remove(file_path)
+    # # delete the zip file
+    # os.remove(file_path)
 
     # grab the paths to the input images and initialize the dictionary
     # of hashes
