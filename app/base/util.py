@@ -4,12 +4,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
  
 import hashlib, binascii, os
-import io
-import numpy as np
-import pandas as pd
-import csv
-import ast
-import json
+
 # Inspiration -> https://www.vitoshacademy.com/hashing-passwords-in-python/
 
 def hash_pass( password ):
@@ -31,3 +26,4 @@ def verify_pass(provided_password, stored_password):
                                   100000)
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
+

@@ -9,9 +9,6 @@ from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
-from flask.helpers import get_root_path
-from flask_login import login_required
-
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -21,7 +18,6 @@ def register_extensions(app):
     login_manager.init_app(app)
 
 def register_blueprints(app):
-    # for module_name in ('base', 'home','graphical_object', 'mrcnn'):
     for module_name in ('base', 'home'):
         module = import_module('app.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
@@ -35,7 +31,6 @@ def configure_database(app):
     @app.teardown_request
     def shutdown_session(exception=None):
         db.session.remove()
-
 
 def create_app(config):
     app = Flask(__name__, static_folder='base/static')
