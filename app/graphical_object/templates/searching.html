@@ -1,0 +1,291 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Searching Page{% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/static/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/static/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %} 
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Searching</h1>
+            
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Image search</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Live search</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <form id="form" enctype="multipart/form-data" method="post" action="{{ url_for('graphical_object_blueprint.search') }}" >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-sm-2">
+                      <p style="margin-top: 5%; margin-bottom: 1rem; padding-left: 45%;"><span style="font-size: medium;font-weight: bold;"> Image URL(s)</span></p>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn bg-olive active">
+                          <input type="radio" name="options" id="option_b1" autocomplete="off" checked> Url 
+                        </label>
+                        <label class="btn bg-olive">
+                          <input type="radio" name="options" id="option_b2" autocomplete="off"> Upload  
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                  </div>
+                 <div class="row" id="single" style="display: '';" >
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <!-- <label for="exampleInputEmail1">Image URL</label> -->
+                      <input type="text" name="link" class="form-control" id="exampleInputEmail1" placeholder="Enter a URL of the image">
+                    </div>
+                  </div>
+                  <div class="col-sm-2"></div>
+                  
+                 </div>
+                 <div class="row" id="multiple" style="display: none;">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <!-- <label for="customFile">Custom File</label> -->
+                      <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose a image with jpg|png|jpeg extension</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2"></div>
+                 </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-3">
+                      <button type="submit"   class="btn btn-primary">Search for image</button>
+                    </div>
+                    <div class="col-sm-4"></div>
+                  </div>
+                </div>
+              </form>
+              <div class="overlay dark" id="load_search" style="display: none;">
+                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+              </div>
+            </div>
+            
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Result for search</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-4">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5 class="card-title">Input</h5>
+                      </div>
+                      <div class="card-body">
+                        <img src="{{url_for('graphical_object_blueprint.static', filename=result['query'])}}"
+                        style="width: 300px;height: 300px;" />
+                      </div>
+                    </div>
+                 </div>
+                 <div class="col-2"></div>
+                 <div class="col-4">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">Output</h5>
+                    </div>
+                    <div class="card-body" style="MAX-HEIGHT: 600PX;
+                    overflow-y: auto;">
+                      <div class="row">
+                        <p>Time: {{result['time']}}&nbsp;seconds</p>
+                      </div>
+                      {% if result['response'] == [] %}
+                      <div class="row">
+                      <p>Not found relatave images!</p>
+                      </div>
+                      {% endif %}
+                      {% for res in result['response'] %}
+                      <div class="row">
+                        <p>Score: {{res['score']}}%</p>
+                        <img src="{{res['paths'][0]}}" style="width: 300px;height: 300px;" />
+                      </div>
+                      {% endfor %}
+                    </div>
+                    </div>
+                  </div>
+                   
+                 <div class="col-1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables -->
+  <script src="/static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/static/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/static/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/static/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="/static/assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- jquery-validation -->
+  <script src="/static/assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+  <script src="/static/assets/plugins/jquery-validation/additional-methods.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+  <!-- page script -->
+  <script>
+    $(function () {
+    $('#form').validate({
+      rules: {
+        link: {
+          required: true,
+          url: true,
+          extension: "jpg,jpeg,png"
+        },
+        image: {
+          required: true,
+          extension: "jpg,jpeg,pn"
+        }
+      },
+      submitHandler: function (form) {
+        
+              var formData = new FormData($('#form').get(0));
+
+              $('#load_search').css("display", "");
+
+             $.ajax({
+                url: "{{ url_for('graphical_object_blueprint.search') }}",
+                data:  formData,
+                method: "POST",
+                mimeType: "multipart/form-data",
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                  $('#load_search').css("display", "none");
+                  alert($.parseJSON(response)['message']);
+                  location.replace("{{ url_for('graphical_object_blueprint.searching')}}");
+                },
+                error: function (error) {
+                $('#load_search').css("display", "none");
+                alert($.parseJSON(error));
+                location.replace("{{ url_for('graphical_object_blueprint.searching')}}");
+                }
+             });
+             return false; // required to block normal submit since you used ajax
+         },
+      messages: {
+        link: {
+          required: "Please enter a url",
+          url: "Please enter a vaild url",
+          extension: "Please enter a valid url of the image"
+        },
+        image: {
+          required: "Please choose a file",
+          extension: "Please choose a file with a valid extension."
+        }
+      },
+      errorElement: 'span',
+      errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+  });
+  $(function(){
+    // Set div display to none
+    $("#option_b2").click(function(){
+        $("#single").css("display", "none");
+        $("#multiple").css("display", "");
+    });
+    
+    // Set div display to block
+    $("#option_b1").click(function(){
+      $("#single").css("display", "");
+        $("#multiple").css("display", "none");
+    });
+  });
+  </script>
+
+{% endblock javascripts %}

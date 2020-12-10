@@ -1,0 +1,79 @@
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link" style="padding-left: 25%;">
+      <img src="https://lh3.googleusercontent.com/GaPo7LuQh1uh037reL-HtUlmUJh7JLat9bc561dk-qFHyzeaiPyoBY9dKUNatphgk4MJQ2su43-vcdUJ0xMpu76245Mt73u9ujP69_I-yhHmXCW7HEwudLycWMPbE42ChH7WCKNaiPvLadzEAz87mrG9_MF6sgwrV88HMJvIaKSOzoE9b4TkNfYfIJ2qDBknzzZGsFm4XI3-VKRn-Z-yyj6srYnFq_j0L752zNsegqDVrDlNDExQEJ4YfTRuCTXJM7Wc4qCGwg0noaz39bARgCCkMrsGFoJvEzWKkiJMOKbNXmb3yvlrlTmZk8KeF_XWviJSHKAPzeGWFdVW47KzESsmLhZCcZO9HfCkgLuzsViFCZJ6JTXEWCRh8mC6NJ5t81bZINFxXG9r56nene6L-TFUCXpBPvpPBeD4ANU-63ZtaMOvgK-pcqt3x0UIEzp0zTFEgl1wkEh3wCc2t4Pj_-WzTYcog0WP2MsJBkRJrH6fA192Rwiz-b_mz1QU8_CXWfCkppPQcd54mUmyevF0I-QY42wMQFdqnV_2I_Hm6PGEG2X0woQhirovfP-JdLiHSThZ9dIhyvaY6DFkh-VMOp3I6w0XiAUYaVkWmXSFD7H-9b1Lkt2k0nPQhYql0dG1NvDTQWVc7k9WE8qsQsTpljhZ_YnrnYwQL7UP_naSd4TtrHpClmEigKIZVdOOjpXkwRrLQKfk2iFpnT3jluFsYbkyDSvKH--oaekEiJob0UVO-8I=w83-h24-no" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 1; float: none;">
+      <span class="brand-text font-weight-light"></span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="/static/assets/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{{ url_for('base_blueprint.logout') }}" class="d-block">
+            {{ current_user.username }} - Logout
+          </a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item ">
+            <a href="/index.html" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fab fa-houzz"></i>
+                <p>
+                  Documents
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                
+                <li class="nav-item">
+                  <a href="/graphical_object/indexing" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Indexing</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/graphical_object/searching" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Searching</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </li>
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+  
