@@ -151,7 +151,7 @@
                 },
                 error: function (error) {
                 $('#detect').css("display", "none");
-                alert($.parseJSON(error));
+                alert($.parseJSON(response)['message']);
                 }
              });
              return false; // required to block normal submit since you used ajax
