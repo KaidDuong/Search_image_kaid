@@ -43,6 +43,7 @@ def indexing():
 @login_required
 def index_images():
     try:
+        basedir = os.path.abspath(os.path.dirname(__file__))
         # load the input query image
         file =  request.files.to_dict()
         # Store Pdf with convert_from_path function
