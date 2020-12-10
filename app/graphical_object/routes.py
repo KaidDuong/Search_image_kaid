@@ -61,6 +61,7 @@ def index_images():
     # of hashes
     imagePaths = list(paths.list_images(os.path.join(basedir, 'static','images')))
     hashes = {}
+    print(imagePaths)
     # loop over the image paths
     for (i, imagePath) in enumerate(imagePaths):
 	    # load the input image
@@ -127,7 +128,7 @@ def search():
     else:
         image_query = form['link']
         image = url_to_image(image_query)
-    query = '/' + '/'.join(image_query.split('\\')[8:]) 
+    query = '/' + '/'.join(image_query.split('\\')[5:]) 
     # compute the hash for the query image, then convert it
     queryHash = dhash(image)
     queryHash = convert_hash(queryHash)
@@ -143,7 +144,7 @@ def search():
     # loop over the results
     for (d, h) in results:
 	    # grab all image paths in our dataset with the same hash
-        paths = ['/' + '/'.join(path.split('\\')[8:]) for path in hashes.get(h, [])]
+        paths = ['/' + '/'.join(path.split('\\')[5:]) for path in hashes.get(h, [])]
 
         r = {'score' : (20-d)*5 , 'hash': h, 'paths': paths }
 	    # print("[INFO] {} total image(s) with d: {}, h: {}".format(
